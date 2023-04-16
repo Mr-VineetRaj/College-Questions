@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+int cal_Det(int size, int matrix[size][size]) //Recursive function to calculate determinant
+{
+    int det = 0;
+    int sub_matrix[size-1][size-1]; //initializing a sub matrix
+
+    if(size == 1)
+    {
+        det+=matrix[0][0]; //basic case of this function
+    }
+    else
+    {
+        for(int i = 0;i<size;i++)
+        {
+            //here these loops are used to store elements about perticular element to a sub matrix 
+            for (int j = 1; j < size; j++)
+            {
+                int index_row = 0; // this variable is used  to verify e=which row has to be skipped while copying element to sub matrix
+                for (int k = 0; k < size; k++)
+                {
+                    if(k == i)
+                    {
+                        index_row++;
+                    }
+
+                    else
+                    {
+                        sub_matrix[j-1][k-index_row] = matrix[j][k]; 
+                    }
+                }
+                
+            }
+
+            //these if elses are used to check whether we have to subtract the sub_matrix determinant value or add it
+            if(i%2 == 0)
+            {
+                det+=matrix[0][i]*cal_Det(size-1,sub_matrix);
+            }
+            else if(i%2!=0)
+            {
+                det-=matrix[0][i]*cal_Det(size-1,sub_matrix);
+            }
+            
+        }
+    }
+
+    return det;
+}
+
+int main()
+{
+    int size;
+    printf("Enter number of columns = Rows = ");
+    scanf("%d", &size);
+
+    int matrix[size][size];
+
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            printf("Enter Value of Element a%d%d : ",i+1,j+1);
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            printf("%d \t ", matrix[i][j]);
+        }
+
+        printf("\n");
+    }
+
+    printf("Value of entered determinant is = %d", cal_Det(size, matrix));
+
+    return 0;
+}
