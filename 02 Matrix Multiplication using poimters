@@ -1,0 +1,79 @@
+#include <stdio.h>
+int size;
+void MatMulti(int (*mat_1)[size], int (*mat_2)[size], int (*mat_1X2)[size])
+{
+    for (int i = 0; i < size; i++)
+    {
+        
+        for (int j = 0; j < size; j++)
+        {
+            *(*(mat_1X2 + i) + j) = 0; //intializing each element of result matrix with zero
+            for (int k = 0; k < size; k++)
+            {
+                (*(*(mat_1X2 + i) + j)) += (*(*(mat_1 + i) + k)) * (*(*(mat_2 + k) + j));  // For Matrix multiplication is row X column
+            }
+        }
+    }
+}
+
+int main()
+{
+    printf("Enter size of matrices : ");
+    scanf("%d",&size);
+    int mat_1[size][size];
+    int mat_2[size][size];
+    int mat_1X2[size][size];
+    printf("enter value of element for matrix 1 \n");
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            
+            printf("enter value of element a%d%d : ",i+1,j+1);
+            scanf("%d",&mat_1[i][j]);
+        }
+    }
+    printf("enter value of element for matrix 2 \n");
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            
+            printf("enter value of element b%d%d : ",i+1,j+1);
+            scanf("%d",&mat_2[i][j]);
+        }
+    }
+
+    printf("Matrix 1\n");
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            printf("%d\t",mat_1[i][j]);
+        }
+        printf("\n");
+    }
+    printf("Matrix 2\n");
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            printf("%d\t",mat_2[i][j]);
+        }
+        printf("\n");
+    }
+
+    MatMulti(mat_1, mat_2, mat_1X2);
+
+    printf("\n\nMatrix 1X2\n");
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            printf("%d\t",mat_1X2[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
